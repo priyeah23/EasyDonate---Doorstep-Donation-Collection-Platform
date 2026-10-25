@@ -1,71 +1,80 @@
-# EasyDonate — Flask + MySQL
+# EasyDonate
 
-A donation-management web app using the existing EasyDonate frontend with a Python Flask backend and MySQL database.
+**Give • Collect • Change Lives**
 
-## Implemented in this version
-- Responsive HTML/CSS/JavaScript frontend
-- Flask routes and JSON API
-- User registration and login using Werkzeug password hashing
-- Donation requests saved to MySQL
-- Contact messages saved to MySQL
-- Session-based login and per-user donation listing API (`GET /api/donations`)
-- Donation receipt ID returned from the database
+## Project Overview
 
-## Requirements
-- Python 3.10+
-- MySQL Server
-- A web browser
+EasyDonate is a donation management system designed to connect donors with NGOs and volunteer collection teams. It supports donation request submission, doorstep pickup coordination, and donation status tracking.
 
-## Setup
+## Features
 
-1. Create and activate a virtual environment:
+- User registration and login
+- Donation request submission
+- Doorstep pickup coordination
+- NGO needs and donation categories
+- Donation tracking and receipt generation
+- Volunteer collection team coordination
 
-   **Windows**
-   ```bat
-   py -m venv .venv
-   .venv\Scripts\activate
-   ```
+## Key Modules
 
-2. Install dependencies:
+- **User Management Module:** Handles user registration and login authentication.
+- **Donation Management Module:** Allows donors to submit and manage donation requests.
+- **Pickup Coordination Module:** Supports organizing doorstep donation collection.
+- **Donation Tracking Module:** Maintains donation status information and receipt details.
+- **NGO and Volunteer Coordination Module:** Supports coordination between donors, NGOs, and collection teams.
+- **Database Management Module:** Stores user details, donation records, and contact messages using MySQL.
 
-   ```bat
+## Technologies Used
+
+- **Frontend:** HTML, CSS, JavaScript
+- **Backend:** Python Flask
+- **Database:** MySQL
+- **Database Connectivity:** MySQL Connector for Python
+- **Security:** Password hashing and session-based authentication
+
+## Project Structure
+
+- `app.py` – Flask backend and application routes
+- `schema.sql` – MySQL database and table definitions
+- `requirements.txt` – Required Python packages
+- `templates/index.html` – Website frontend
+- `.env.example` – Example environment configuration
+
+## Future Enhancements
+
+- Real-time location tracking for collection teams
+- Automated NGO and donor matching
+- Online donation impact reports
+- Email or SMS notifications
+- Dynamic dashboard statistics
+
+## How to Run
+
+1. Install Python and MySQL.
+2. Create the database by executing `schema.sql` in MySQL.
+3. Install the required packages:
+
+   ```bash
    pip install -r requirements.txt
    ```
 
-3. In MySQL Workbench or the MySQL command line, run the contents of `schema.sql`.
+4. Configure the database credentials and Flask secret key using environment variables.
+5. Start the application:
 
-4. Set database environment variables. For example, in Windows Command Prompt:
-
-   ```bat
-   set DB_HOST=localhost
-   set DB_PORT=3306
-   set DB_USER=root
-   set DB_PASSWORD=YOUR_MYSQL_PASSWORD
-   set DB_NAME=easydonate_db
-   set FLASK_SECRET_KEY=replace-with-a-long-random-secret
-   ```
-
-   Replace `YOUR_MYSQL_PASSWORD` with your own MySQL password. Do not upload real credentials to GitHub.
-
-5. Start the app:
-
-   ```bat
+   ```bash
    python app.py
    ```
 
-6. Open `http://127.0.0.1:5000` in your browser.
+6. Open the local address displayed in the terminal in your web browser.
 
-## API endpoints
-- `GET /api/health` — checks MySQL connectivity
-- `POST /api/register` — creates an account
-- `POST /api/login` — verifies credentials
-- `POST /api/logout` — clears the login session
-- `POST /api/donations` — validates and stores a donation
-- `GET /api/donations` — lists donations for the signed-in user
-- `POST /api/messages` — stores a contact message
+## Efficiency and Benefits
 
-## Important notes
-- The donation form can save a donation even if the donor has not logged in; such records have no linked user account. Registration/login is available from the top navigation.
-- The page contains demo/sample dashboard counts, campaign progress, NGO need levels and volunteer assignment text. These are illustrative UI content and are not dynamically fetched from MySQL in this starter version.
-- Donation status is initially saved as `Submitted`; live GPS tracking, automatic NGO matching, pickup-team assignment and status updates are not implemented.
-- This is a local development starter. Before public deployment, configure a strong secret key, production server, CSRF protections, rate limiting, HTTPS, and privacy/security review.
+EasyDonate makes donation collection more convenient and efficient by allowing donors to submit requests online and helping organize donation records in one place. It reduces manual paperwork, saves time, supports doorstep pickup coordination, and improves communication between donors, NGOs, and volunteer collection teams. This helps make the donation process more organized, accessible, and transparent.
+
+## Project Goal
+
+The goal of EasyDonate is to make donation collection more organized and convenient by connecting donors, NGOs, and volunteer collection teams through a single platform.
+
+---
+
+
