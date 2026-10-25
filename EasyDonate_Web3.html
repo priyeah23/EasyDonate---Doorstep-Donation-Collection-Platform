@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EasyDonate | Give. Collect. Change Lives.</title>
+<style>
+:root{--green:#087f5b;--dark:#064e3b;--light:#effaf5;--cream:#fbfdf8;--text:#18352d;--muted:#6b7f78;--card:#fff;--border:#dcebe4}
+*{box-sizing:border-box;margin:0;padding:0;scroll-behavior:smooth}
+body{font-family:Arial,Helvetica,sans-serif;color:var(--text);background:var(--cream);line-height:1.6}
+nav{position:sticky;top:0;z-index:10;background:#ffffffee;backdrop-filter:blur(10px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:15px 6%;gap:20px}
+.logo{font-weight:800;color:var(--dark);font-size:21px}.logo span{color:var(--green)}
+nav ul{display:flex;gap:24px;list-style:none;flex-wrap:wrap}nav a{text-decoration:none;color:var(--text);font-size:14px;font-weight:600}nav a:hover{color:var(--green)}
+.btn{display:inline-block;border:0;border-radius:10px;padding:11px 18px;background:var(--green);color:white;text-decoration:none;font-weight:700;cursor:pointer}.btn.alt{background:white;color:var(--green);border:1px solid var(--green)}
+.hero{padding:75px 6%;display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:50px;background:linear-gradient(135deg,#f2fff8,#fffdf5)}
+.hero h1{font-size:clamp(40px,5vw,66px);line-height:1.05;color:var(--dark);margin:15px 0}.hero p{color:var(--muted);font-size:18px;max-width:570px}.tag{color:var(--green);font-weight:800;letter-spacing:1px}
+.hero img{width:100%;height:430px;object-fit:cover;border-radius:28px;box-shadow:0 20px 50px #064e3b22}
+.actions{margin-top:25px;display:flex;gap:12px;flex-wrap:wrap}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;padding:25px 6%;background:white}.stat{text-align:center;padding:18px;border-right:1px solid var(--border)}.stat:last-child{border:0}.stat b{display:block;font-size:28px;color:var(--green)}
+section{padding:70px 6%}.section-title{text-align:center;max-width:720px;margin:0 auto 38px}.section-title h2{font-size:36px;color:var(--dark);margin-bottom:8px}.section-title p{color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}.card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:25px;box-shadow:0 8px 25px #064e3b09}.icon{font-size:30px;margin-bottom:12px}.card h3{margin-bottom:8px;color:var(--dark)}.card p{color:var(--muted);font-size:14px}
+.about{display:grid;grid-template-columns:1fr 1fr;gap:45px;align-items:center;background:white}.about img{width:100%;height:360px;object-fit:cover;border-radius:22px}.about h2{font-size:38px;color:var(--dark);margin-bottom:15px}.about p{color:var(--muted);margin-bottom:15px}
+.benefits{background:var(--light)}.benefit-list{display:grid;grid-template-columns:repeat(2,1fr);gap:15px}.benefit{padding:20px;background:white;border-radius:14px;border:1px solid var(--border)}.benefit strong{display:block;color:var(--dark)}
+.dashboard{background:#f6faf8}.dash{max-width:1100px;margin:auto;background:white;border:1px solid var(--border);border-radius:22px;overflow:hidden;display:grid;grid-template-columns:210px 1fr}.side{background:var(--dark);color:white;padding:25px}.side h3{margin-bottom:25px}.side a{display:block;color:#dff6ed;text-decoration:none;padding:10px 0;font-size:14px}.dashmain{padding:30px}.dashcards{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin:20px 0}.dcard{padding:18px;background:var(--light);border-radius:14px}.dcard b{font-size:26px;color:var(--green);display:block}.table{width:100%;border-collapse:collapse;font-size:14px}.table th,.table td{padding:13px;text-align:left;border-bottom:1px solid var(--border)}.status{font-weight:700;color:var(--green)}
+.tech{background:white}.flow{display:flex;justify-content:center;align-items:center;gap:12px;flex-wrap:wrap;margin-top:30px}.flow span{padding:14px 18px;border:1px solid var(--border);border-radius:12px;background:var(--light);font-weight:700}.arrow{color:var(--green);font-size:22px}
+.contact{display:grid;grid-template-columns:1fr 1fr;gap:30px}.contact-box{background:white;border:1px solid var(--border);padding:30px;border-radius:20px}.contact-item{margin:18px 0}.contact-item b{display:block;color:var(--dark)}input,textarea,select{width:100%;padding:13px;margin:7px 0 14px;border:1px solid var(--border);border-radius:9px;font:inherit}textarea{height:110px;resize:vertical}
+footer{background:var(--dark);color:#dff6ed;padding:45px 6%;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:30px}footer h3,footer h4{color:white;margin-bottom:12px}footer a{display:block;color:#dff6ed;text-decoration:none;margin:7px 0;font-size:14px}
+.modal{display:none;position:fixed;inset:0;background:#0008;z-index:30;align-items:center;justify-content:center;padding:20px}.modal-box{background:white;border-radius:20px;padding:30px;width:min(430px,100%);position:relative}.close{position:absolute;right:18px;top:12px;border:0;background:none;font-size:25px;cursor:pointer}
+@media(max-width:850px){.hero,.about,.contact{grid-template-columns:1fr}.grid{grid-template-columns:1fr 1fr}.dash{grid-template-columns:1fr}.side{display:none}footer{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){nav ul{display:none}.grid,.benefit-list,.stats,.dashcards{grid-template-columns:1fr}.hero{padding-top:45px}.hero img{height:280px}section{padding:50px 5%}}
+
+/* Special EasyDonate features */
+.special{background:linear-gradient(135deg,#064e3b,#087f5b);color:white}
+.special .section-title h2,.special .section-title p{color:white}
+.featured{display:grid;grid-template-columns:1.1fr .9fr;gap:25px}
+.impact-card,.campaign-card{background:white;color:var(--text);border-radius:20px;padding:28px}
+.impact-number{font-size:48px;font-weight:800;color:var(--green)}
+.progress{height:11px;background:#e5eee9;border-radius:20px;overflow:hidden;margin:10px 0 18px}.progress i{display:block;height:100%;width:72%;background:var(--green);border-radius:20px}
+.points{display:flex;gap:10px;flex-wrap:wrap}.pill{padding:8px 12px;border-radius:30px;background:#e8f8f0;color:var(--dark);font-weight:700;font-size:13px}
+.match-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.ngo-card{background:white;border:1px solid var(--border);border-radius:18px;padding:22px;position:relative}.need{position:absolute;right:15px;top:15px;background:#fff3d8;color:#9a6300;border-radius:20px;padding:5px 9px;font-size:11px;font-weight:800}
+.timeline{max-width:850px;margin:auto;position:relative}.timeline:before{content:"";position:absolute;left:18px;top:0;bottom:0;width:3px;background:#cfe7dc}.step{display:flex;gap:22px;position:relative;margin:20px 0}.dot{min-width:39px;height:39px;border-radius:50%;background:var(--green);color:white;display:grid;place-items:center;font-weight:800;z-index:1}
+.campaigns{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.campaign-card h3{margin:10px 0}.campaign-card .mini{font-size:13px;color:var(--muted)}
+.faq{max-width:900px;margin:auto}.faq details{background:white;border:1px solid var(--border);border-radius:12px;padding:17px;margin:10px 0}.faq summary{cursor:pointer;font-weight:700;color:var(--dark)}
+.toast{position:fixed;right:20px;bottom:20px;background:var(--dark);color:white;padding:14px 18px;border-radius:12px;display:none;z-index:50;box-shadow:0 10px 30px #0003}
+.dark{--cream:#101917;--text:#e9f4ef;--muted:#a9bbb4;--card:#18231f;--border:#2a3c35;--light:#13261f}.dark nav,.dark .stats,.dark .about,.dark .tech,.dark .contact-box,.dark .modal-box,.dark .ngo-card,.dark .campaign-card,.dark .faq details,.dark .card,.dark .dcard{background:#18231f}.dark .about img{opacity:.9}.dark .special{background:#052f24}
+@media(max-width:850px){.featured{grid-template-columns:1fr}.match-grid,.campaigns{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.match-grid,.campaigns{grid-template-columns:1fr}}
+
+
+.tech-extra{margin-top:20px}
+.tech-extra-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.tech-mini{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px;box-shadow:0 6px 18px #064e3b08}
+.tech-mini .mini-icon{font-size:26px;margin-bottom:9px}
+.tech-mini h3{color:var(--dark);margin-bottom:7px;font-size:17px}
+.tech-mini p{color:var(--muted);font-size:13px}
+.tech-mini strong{color:var(--dark)}
+@media(max-width:850px){.tech-extra-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.tech-extra-grid{grid-template-columns:1fr}}
+
+
+.donation-result{display:none;margin:28px auto 0;max-width:850px}
+.success-box{background:#effaf5;border:1px solid #bfe5d4;border-radius:18px;padding:22px;margin-bottom:20px}
+.success-box h3{color:var(--dark);margin-bottom:6px}
+.success-box p{color:var(--muted);font-size:14px}
+.live-tracking{background:white;border:1px solid var(--border);border-radius:20px;padding:25px;margin-bottom:20px;box-shadow:0 8px 25px #064e3b09}
+.live-tracking h3{color:var(--dark);margin-bottom:20px}
+.track-line{display:grid;grid-template-columns:repeat(4,1fr);position:relative;margin:10px 0 28px}
+.track-line:before{content:"";position:absolute;left:12.5%;right:12.5%;top:17px;height:4px;background:#dcebe4;z-index:0}
+.track-step{text-align:center;position:relative;z-index:1}
+.track-dot{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;margin:auto;background:#dcebe4;color:#71847d;font-weight:800;border:4px solid white}
+.track-step.active .track-dot{background:var(--green);color:white;box-shadow:0 0 0 3px #cdeadd}
+.track-step.active .track-label{color:var(--dark);font-weight:800}
+.track-label{display:block;margin-top:9px;font-size:12px;color:var(--muted)}
+.assigned{padding:15px 17px;background:var(--light);border-radius:13px;border:1px solid var(--border);color:var(--text);font-size:14px}
+.receipt{background:white;border:1px solid var(--border);border-radius:20px;padding:25px}
+.receipt-head{display:flex;justify-content:space-between;gap:15px;align-items:center;border-bottom:1px solid var(--border);padding-bottom:15px;margin-bottom:16px}
+.receipt-head h3{color:var(--dark)}
+.receipt-id{font-size:12px;color:var(--muted)}
+.receipt-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.receipt-item{padding:13px;background:var(--light);border-radius:11px}
+.receipt-item small{display:block;color:var(--muted);font-size:11px;margin-bottom:3px}
+.receipt-item strong{color:var(--dark);font-size:14px;word-break:break-word}
+@media(max-width:560px){
+  .track-line:before{left:8%;right:8%}
+  .track-label{font-size:10px}
+  .receipt-grid{grid-template-columns:1fr}
+}
+
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">♡ Easy<span>Donate</span></div>
+  <ul>
+    <li><a href="#home">Home</a></li><li><a href="#about">About</a></li><li><a href="#features">Features</a></li>
+    <li><a href="#benefits">Benefits</a></li><li><a href="#special">Impact</a></li><li><a href="#dashboard">Dashboard</a></li><li><a href="#tech">Technical</a></li><li><a href="#contact">Contact</a></li>
+  </ul>
+  <div style="display:flex;gap:8px;align-items:center"><button class="btn alt" onclick="toggleDark()">☾</button><button class="btn" onclick="openModal('login')">Login</button></div>
+</nav>
+
+<main>
+<section class="hero" id="home">
+  <div>
+    <div class="tag">DONATE FROM YOUR DOORSTEP</div>
+    <h1>Give what you can. Change someone's life.</h1>
+    <p>EasyDonate connects generous donors with NGOs and volunteer collection teams. Donate useful items, schedule a doorstep pickup, and track your contribution until it reaches someone in need.</p>
+    <div class="actions"><a class="btn" href="#donate">Donate Now</a><a class="btn alt" href="#about">Learn More</a></div>
+  </div>
+  <img src="https://images.unsplash.com/photo-1593113630400-ea4288922497?auto=format&fit=crop&w=1200&q=85" alt="People preparing donated items">
+</section>
+
+<div class="stats">
+  <div class="stat"><b>1,000+</b>Donations Collected</div>
+  <div class="stat"><b>500+</b>Families Supported</div>
+  <div class="stat"><b>50+</b>NGO Partners</div>
+</div>
+
+<section id="about" class="about">
+  <img src="https://images.unsplash.com/photo-1559027615-cd4628902d4a?auto=format&fit=crop&w=1000&q=85" alt="Volunteers helping community">
+  <div><div class="tag">ABOUT EASydonate</div><h2>A small step toward a kinder world.</h2>
+  <p>EasyDonate is a simple donation platform designed to make giving convenient for everyone. Instead of traveling to a donation center, donors can request a doorstep pickup.</p>
+  <p>The platform connects donors, NGOs, and volunteer collection teams while helping keep donation progress transparent and organized.</p>
+  <a class="btn" href="#features">Explore Features</a></div>
+</section>
+
+<section id="features">
+  <div class="section-title"><h2>Everything you need to donate easily</h2><p>From creating a donation to seeing its final impact, EasyDonate brings the complete process together.</p></div>
+  <div class="grid">
+    <div class="card"><div class="icon">📦</div><h3>Easy Donation</h3><p>Add item category, quantity, description and pickup details in a few clicks.</p></div>
+    <div class="card"><div class="icon">🚚</div><h3>Doorstep Pickup</h3><p>Choose a convenient date and time for a volunteer collection team to collect your items.</p></div>
+    <div class="card"><div class="icon">🤝</div><h3>NGO Support</h3><p>Connect donations with verified NGOs and communities that need them.</p></div>
+    <div class="card"><div class="icon">📍</div><h3>Donation Tracking</h3><p>Follow your donation from submitted and scheduled to collected and delivered.</p></div>
+    <div class="card"><div class="icon">🔒</div><h3>Safe & Transparent</h3><p>Keep donation information organized and provide clear status updates.</p></div>
+    <div class="card"><div class="icon">🌱</div><h3>Second Life for Items</h3><p>Encourage reuse of useful clothes, books, furniture, electronics and more.</p></div>
+  </div>
+</section>
+
+<section id="benefits" class="benefits">
+  <div class="section-title"><h2>Why choose EasyDonate?</h2><p>Designed to make donation simple, convenient and meaningful.</p></div>
+  <div class="benefit-list">
+    <div class="benefit">♻️ <strong>Reduces Waste</strong>Useful unused items get a second life instead of being thrown away.</div>
+    <div class="benefit">❤️ <strong>Helps People in Need</strong>Donations can reach families and communities through NGO partners.</div>
+    <div class="benefit">⏱️ <strong>Saves Time</strong>No need to travel to a donation center for every contribution.</div>
+    <div class="benefit">🌍 <strong>Builds a Greener Future</strong>Reuse supports a more sustainable community.</div>
+    <div class="benefit">📲 <strong>Easy Tracking</strong>Donors can check the current status of their donation.</div>
+    <div class="benefit">👥 <strong>Community Powered</strong>Volunteers help move donations from donors to the right destination.</div>
+  </div>
+</section>
+
+<section id="dashboard" class="dashboard">
+  <div class="section-title"><h2>Donor Dashboard</h2><p>A simple view of your donations and pickup activity.</p></div>
+  <div class="dash">
+    <aside class="side"><h3>♡ EasyDonate</h3><a href="#dashboard">Dashboard</a><a href="#donate">Make a Donation</a><a href="#tracking">My Donations</a><a href="#contact">Support</a></aside>
+    <div class="dashmain">
+      <h2>Hello, Priyadharshini 👋</h2><p style="color:#6b7f78">Your kindness makes a difference.</p>
+      <div class="dashcards"><div class="dcard">Total Donations<b>5</b></div><div class="dcard">Items Donated<b>12</b></div><div class="dcard">Pickups Scheduled<b>3</b></div></div>
+      <h3>Recent Donations</h3>
+      <table class="table"><tr><th>Date</th><th>Item</th><th>Quantity</th><th>Status</th></tr>
+      <tr><td>25 Aug</td><td>Clothes</td><td>5</td><td class="status">Collected</td></tr>
+      <tr><td>20 Aug</td><td>Books</td><td>3</td><td class="status">Delivered</td></tr>
+      <tr><td>15 Aug</td><td>Electronics</td><td>1</td><td>Scheduled</td></tr></table>
+    </div>
+  </div>
+</section>
+
+<section id="donate">
+  <div class="section-title"><h2>Make a Donation</h2><p>Tell us what you would like to donate and when our volunteer team can collect it.</p></div>
+  <div class="contact-box" style="max-width:850px;margin:auto">
+    <form onsubmit="submitDonation(event)">
+      <label>Donor Name</label><input id="donorName" required placeholder="Enter your name">
+      <label>Item Category</label><select id="itemCategory" required><option value="">Select category</option><option>Clothes</option><option>Books</option><option>Furniture</option><option>Electronics</option><option>Food</option><option>Other</option></select>
+      <label>Item Description</label><textarea required placeholder="Describe the items you want to donate"></textarea>
+      <label>Quantity</label><input type="number" min="1" required placeholder="Enter quantity">
+      <label>Pickup Date</label><input type="date" required>
+      <label>Pickup Time</label><input type="time" required>
+      <label>Address</label><textarea required placeholder="Enter pickup address"></textarea>
+      <button class="btn" type="submit">Submit Donation</button>
+    </form>
+  </div>
+</section>
+
+<section id="tracking">
+  <div class="section-title"><h2>Donation Tracking</h2><p>Your donation status and receipt will appear here after submission.</p></div>
+
+  <div id="donationResult" class="donation-result">
+    <div class="success-box">
+      <h3>✅ Form Submitted Successfully!</h3>
+      <p>Your donation request has been received. An NGO volunteer / collection team has been assigned for the pickup.</p>
+    </div>
+
+    <div class="live-tracking">
+      <h3>Donation Tracking Status</h3>
+      <div class="track-line">
+        <div class="track-step active">
+          <div class="track-dot">✓</div>
+          <span class="track-label">Submitted</span>
+        </div>
+        <div class="track-step active">
+          <div class="track-dot">✓</div>
+          <span class="track-label">Scheduled</span>
+        </div>
+        <div class="track-step">
+          <div class="track-dot">3</div>
+          <span class="track-label">Collected</span>
+        </div>
+        <div class="track-step">
+          <div class="track-dot">4</div>
+          <span class="track-label">Delivered</span>
+        </div>
+      </div>
+      <div class="assigned">
+        <strong>🚚 Collection Team Assigned:</strong>
+        EasyDonate Volunteer Team — Team ED-07
+        <br>
+        <span style="color:var(--muted)">Status: Pickup scheduled and waiting for collection.</span>
+      </div>
+    </div>
+
+    <div class="receipt">
+      <div class="receipt-head">
+        <div>
+          <h3>♡ EasyDonate Donation Details</h3>
+          <div class="receipt-id" id="receiptId">Donation ID: ED-000000</div>
+        </div>
+        <span class="pill">Scheduled</span>
+      </div>
+
+      <div class="receipt-grid">
+        <div class="receipt-item"><small>Donor Name</small><strong id="receiptName">-</strong></div>
+        <div class="receipt-item"><small>Item Category</small><strong id="receiptCategory">-</strong></div>
+        <div class="receipt-item"><small>Item Description</small><strong id="receiptDescription">-</strong></div>
+        <div class="receipt-item"><small>Quantity</small><strong id="receiptQuantity">-</strong></div>
+        <div class="receipt-item"><small>Pickup Date</small><strong id="receiptDate">-</strong></div>
+        <div class="receipt-item"><small>Pickup Time</small><strong id="receiptTime">-</strong></div>
+        <div class="receipt-item" style="grid-column:1/-1"><small>Pickup Address</small><strong id="receiptAddress">-</strong></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="special" id="special">
+  <div class="section-title"><h2>What makes EasyDonate special?</h2><p>Smart ideas that turn a simple donation into a measurable community impact.</p></div>
+  <div class="featured">
+    <div class="impact-card">
+      <div class="tag" style="color:#087f5b">YOUR IMPACT</div>
+      <h2 style="margin:8px 0">Impact Passport</h2>
+      <p>Every completed donation builds your personal impact profile.</p>
+      <div class="impact-number" id="impactCount">12</div>
+      <p>items given a second life</p>
+      <div class="progress"><i></i></div>
+      <div class="points"><span class="pill">🌱 Eco Saver</span><span class="pill">❤️ Community Helper</span><span class="pill">🏆 120 Impact Points</span></div>
+      <button class="btn" style="margin-top:18px" onclick="showToast('Impact certificate generated for your demo profile!')">Get Impact Certificate</button>
+    </div>
+    <div class="campaign-card">
+      <div class="tag">SMART MATCHING</div>
+      <h2 style="margin:8px 0">Donate where it is needed most</h2>
+      <p>EasyDonate can match item categories with current NGO needs, helping useful donations reach the right destination.</p>
+      <div class="card" style="margin-top:18px">
+        <b>Suggested match</b><br>📚 Books → Education Support<br><small>High need • 3.2 km away</small>
+      </div>
+      <div class="card" style="margin-top:12px">
+        <b>Collection route</b><br>📍 4 nearby pickups can be grouped into one volunteer route.
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="ngo-needs">
+  <div class="section-title"><h2>NGO Needs Board</h2><p>See what partner organizations currently need most.</p></div>
+  <div class="match-grid">
+    <div class="ngo-card"><span class="need">HIGH NEED</span><div class="icon">📚</div><h3>Books</h3><p>School and college books for learning centres.</p><p style="margin-top:12px"><b>Priority:</b> 92%</p><button class="btn" style="margin-top:12px" onclick="scrollToDonate('Books')">Donate Books</button></div>
+    <div class="ngo-card"><span class="need">NEEDED</span><div class="icon">👕</div><h3>Clothes</h3><p>Clean, usable clothes for families and shelters.</p><p style="margin-top:12px"><b>Priority:</b> 78%</p><button class="btn" style="margin-top:12px" onclick="scrollToDonate('Clothes')">Donate Clothes</button></div>
+    <div class="ngo-card"><span class="need">NEEDED</span><div class="icon">🪑</div><h3>Furniture</h3><p>Tables, chairs and storage items for community spaces.</p><p style="margin-top:12px"><b>Priority:</b> 65%</p><button class="btn" style="margin-top:12px" onclick="scrollToDonate('Furniture')">Donate Furniture</button></div>
+  </div>
+</section>
+
+<section id="campaigns" class="benefits">
+  <div class="section-title"><h2>Community Campaigns</h2><p>Join focused donation drives and help meet a specific need.</p></div>
+  <div class="campaigns">
+    <div class="campaign-card"><div class="icon">🎒</div><h3>Back-to-School Drive</h3><p class="mini">Books, bags and stationery</p><div class="progress"><i style="width:68%"></i></div><b>68% complete</b><br><button class="btn" style="margin-top:12px" onclick="showToast('You joined the Back-to-School campaign!')">Join Campaign</button></div>
+    <div class="campaign-card"><div class="icon">🏠</div><h3>Home Essentials</h3><p class="mini">Useful furniture and household items</p><div class="progress"><i style="width:54%"></i></div><b>54% complete</b><br><button class="btn" style="margin-top:12px" onclick="showToast('You joined the Home Essentials campaign!')">Join Campaign</button></div>
+    <div class="campaign-card"><div class="icon">💻</div><h3>Digital Learning</h3><p class="mini">Working laptops and electronics</p><div class="progress"><i style="width:41%"></i></div><b>41% complete</b><br><button class="btn" style="margin-top:12px" onclick="showToast('You joined the Digital Learning campaign!')">Join Campaign</button></div>
+  </div>
+</section>
+
+<section id="journey">
+  <div class="section-title"><h2>Your Donation Journey</h2><p>Transparent from your doorstep to the final destination.</p></div>
+  <div class="timeline">
+    <div class="step"><div class="dot">1</div><div><h3>Submit</h3><p>Donor enters item and pickup information.</p></div></div>
+    <div class="step"><div class="dot">2</div><div><h3>Smart Match</h3><p>The system can suggest an NGO based on item need and location.</p></div></div>
+    <div class="step"><div class="dot">3</div><div><h3>Volunteer Pickup</h3><p>A nearby volunteer collection team receives the pickup request.</p></div></div>
+    <div class="step"><div class="dot">4</div><div><h3>Verified Collection</h3><p>Pickup status is updated after the items are collected.</p></div></div>
+    <div class="step"><div class="dot">5</div><div><h3>Impact Update</h3><p>The donor sees delivery status and an impact summary.</p></div></div>
+  </div>
+</section>
+
+<section id="faq" class="benefits">
+  <div class="section-title"><h2>Frequently Asked Questions</h2><p>Quick answers for donors, NGOs and volunteers.</p></div>
+  <div class="faq">
+    <details><summary>Is the collection team paid?</summary><p>No. EasyDonate can use a volunteer-based collection team. Volunteers support the community without receiving a pickup fee.</p></details>
+    <details><summary>What items can I donate?</summary><p>Useful items such as clothes, books, furniture, electronics and other accepted materials can be listed through the donation form.</p></details>
+    <details><summary>How does tracking work?</summary><p>Flask manages the donation workflow while MySQL stores the donation and status information.</p></details>
+    <details><summary>How can NGOs participate?</summary><p>NGOs can register, list current needs, receive matched donations and update delivery information.</p></details>
+  </div>
+</section>
+
+<section id="tech" class="tech">
+  <div class="section-title"><h2>Technical Details</h2><p>EasyDonate can be developed using a simple and scalable web technology stack.</p></div>
+  <div class="grid">
+    <div class="card"><div class="icon">💻</div><h3>Frontend</h3><p>HTML5, CSS3, JavaScript and Bootstrap for responsive user interfaces.</p></div>
+    <div class="card"><div class="icon">🐍</div><h3>Backend</h3><p>Python Flask handles routes, business logic, form submissions and application requests.</p></div>
+    <div class="card"><div class="icon">🗄️</div><h3>Database</h3><p>MySQL stores users, donations, pickup schedules, NGOs and status information.</p></div>
+  </div>
+  <div class="flow"><span>User / Frontend</span><b class="arrow">→</b><span>Flask Backend</span><b class="arrow">→</b><span>MySQL Database</span><b class="arrow">→</b><span>Response</span></div>
+
+  <div class="tech-extra">
+    <div class="tech-extra-grid">
+      <div class="tech-mini">
+        <div class="mini-icon">☕</div>
+        <h3>Application Layer</h3>
+        <p><strong>Java</strong> can support the application logic, with <strong>Spring Boot</strong> providing the framework for building scalable web services.</p>
+      </div>
+
+      <div class="tech-mini">
+        <div class="mini-icon">🔗</div>
+        <h3>Service Communication</h3>
+        <p><strong>REST API</strong> can connect the user interface with application services for donation forms, pickup requests, tracking and NGO updates.</p>
+      </div>
+
+      <div class="tech-mini">
+        <div class="mini-icon">📄</div>
+        <h3>Data Exchange</h3>
+        <p><strong>JSON</strong> can be used to exchange structured donation, user, pickup and status data between the web interface and services.</p>
+      </div>
+
+      <div class="tech-mini">
+        <div class="mini-icon">⚙️</div>
+        <h3>Decision Engine</h3>
+        <p><strong>Java / rule-based logic</strong> can handle donation matching, priority rules, pickup assignment and status-based decisions.</p>
+      </div>
+
+      <div class="tech-mini">
+        <div class="mini-icon">🧪</div>
+        <h3>Quality Checks</h3>
+        <p><strong>JUnit</strong> can test application logic, while <strong>manual / functional testing</strong> can verify forms, tracking and user flows.</p>
+      </div>
+
+      <div class="tech-mini">
+        <div class="mini-icon">🔀</div>
+        <h3>Code Collaboration</h3>
+        <p><strong>Git</strong> can manage code versions and changes, while <strong>GitHub</strong> can host the project repository and support team collaboration.</p>
+      </div>
+
+      <div class="tech-mini">
+        <div class="mini-icon">🧩</div>
+        <h3>Visual Design Layer</h3>
+        <p><strong>SVG</strong> can be used for lightweight icons, diagrams, workflow visuals and scalable project illustrations.</p>
+      </div>
+
+      <div class="tech-mini">
+        <div class="mini-icon">📱</div>
+        <h3>Responsive Experience</h3>
+        <p>The interface is designed to adapt across desktop, tablet and mobile screens, keeping donation and tracking features easy to use.</p>
+      </div>
+
+      <div class="tech-mini">
+        <div class="mini-icon">🔒</div>
+        <h3>Reliable Data Flow</h3>
+        <p>User requests move through the application layer to stored data and return as clear responses, supporting organized and traceable donation operations.</p>
+      </div>
+
+      <div class="tech-mini">
+        <div class="mini-icon">📋</div>
+        <h3>Development Workflow</h3>
+        <p><strong>Agile / Scrum</strong> can be used to plan features in small iterations, review progress and continuously improve EasyDonate.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="section-title"><h2>Contact EasyDonate</h2><p>We would love to hear from donors, NGOs and volunteers.</p></div>
+  <div class="contact">
+    <div class="contact-box">
+      <div class="contact-item">📞 <b>Phone</b>+91 98765 43210<br>+91 87654 32109</div>
+      <div class="contact-item">✉️ <b>Email</b>info@easydonate.com<br>support@easydonate.com</div>
+      <div class="contact-item">📍 <b>Address</b>No. 12, Green Park Street, Chennai, Tamil Nadu</div>
+      <div class="contact-item">🤝 <b>Volunteer With Us</b>Join our community-powered collection network.</div>
+    </div>
+    <div class="contact-box">
+      <form onsubmit="sendMessage(event)"><label>Name</label><input required placeholder="Your name"><label>Email</label><input type="email" required placeholder="Your email"><label>Message</label><textarea required placeholder="Your message"></textarea><button class="btn" type="submit">Send Message</button></form>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div><h3>♡ EasyDonate</h3><p>Give • Collect • Change Lives</p><p style="margin-top:10px;font-size:13px">Making donation easier through doorstep collection and community support.</p></div>
+  <div><h4>Quick Links</h4><a href="#home">Home</a><a href="#about">About</a><a href="#features">Features</a><a href="#benefits">Benefits</a></div>
+  <div><h4>Services</h4><a href="#donate">Donate</a><a href="#tracking">Track Donation</a><a href="#dashboard">Dashboard</a><a href="#tech">Technical</a><a href="#special">Impact Passport</a><a href="#ngo-needs">NGO Needs</a><a href="#faq">FAQ</a></div>
+  <div><h4>Contact</h4><a href="tel:+919876543210">+91 98765 43210</a><a href="mailto:info@easydonate.com">info@easydonate.com</a><a href="#contact">Chennai, Tamil Nadu</a></div>
+</footer>
+
+<div class="toast" id="toast"></div>
+<div class="modal" id="modal"><div class="modal-box"><button class="close" onclick="closeModal()">×</button><h2 id="modalTitle">Login</h2><form onsubmit="demoLogin(event)"><label>Email</label><input type="email" required placeholder="Enter email"><label>Password</label><input type="password" required placeholder="Enter password"><button class="btn" style="width:100%" type="submit">Continue</button></form><p style="margin-top:15px;text-align:center;color:#6b7f78">Demo interface for the EasyDonate project.</p></div></div>
+
+<script>
+function openModal(type){document.getElementById('modal').style.display='flex';document.getElementById('modalTitle').textContent=type==='login'?'Welcome Back':'Create Account'}
+function closeModal(){document.getElementById('modal').style.display='none'}
+function demoLogin(e){e.preventDefault();alert('Demo login successful! Connect this form to Flask + MySQL for real authentication.');closeModal()}
+function submitDonation(e){
+  e.preventDefault();
+
+  const form = e.target;
+  const category = document.getElementById('itemCategory').value;
+  const description = form.querySelector('textarea').value;
+  const quantity = form.querySelector('input[type="number"]').value;
+  const date = form.querySelector('input[type="date"]').value;
+  const time = form.querySelector('input[type="time"]').value;
+  const address = form.querySelectorAll('textarea')[1].value;
+  const name = document.getElementById('donorName').value;
+
+  document.getElementById('receiptName').textContent = name;
+  document.getElementById('receiptCategory').textContent = category;
+  document.getElementById('receiptDescription').textContent = description;
+  document.getElementById('receiptQuantity').textContent = quantity;
+  document.getElementById('receiptDate').textContent = date;
+  document.getElementById('receiptTime').textContent = time;
+  document.getElementById('receiptAddress').textContent = address;
+
+  const donationId = 'ED-' + Math.floor(100000 + Math.random() * 900000);
+  document.getElementById('receiptId').textContent = 'DONATION ID: ' + donationId;
+
+  const result = document.getElementById('donationResult');
+  result.style.display = 'block';
+
+  form.reset();
+  showToast('Form submitted successfully! Pickup has been scheduled.');
+
+  setTimeout(()=>{
+    document.getElementById('tracking').scrollIntoView({behavior:'smooth', block:'start'});
+  }, 300);
+}
+function sendMessage(e){e.preventDefault();alert('Thank you! Your message has been received.');e.target.reset()}
+window.onclick=function(e){if(e.target===document.getElementById('modal'))closeModal()}
+
+function showToast(msg){
+  const t=document.getElementById('toast'); t.textContent=msg; t.style.display='block';
+  clearTimeout(window.toastTimer); window.toastTimer=setTimeout(()=>t.style.display='none',3000);
+}
+function toggleDark(){
+  document.body.classList.toggle('dark');
+  localStorage.setItem('easyDonateDark',document.body.classList.contains('dark'));
+  showToast(document.body.classList.contains('dark')?'Dark mode enabled':'Light mode enabled');
+}
+if(localStorage.getItem('easyDonateDark')==='true') document.body.classList.add('dark');
+function scrollToDonate(category){
+  document.getElementById('donate').scrollIntoView({behavior:'smooth'});
+  setTimeout(()=>{document.getElementById('itemCategory').value=category},500);
+}
+
+</script>
+</body>
+</html>
